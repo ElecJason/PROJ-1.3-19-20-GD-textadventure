@@ -6,7 +6,10 @@ const imageLocation = document.getElementById('imageLocation');
 const myDescription = document.getElementById('description');
 const myInventory = document.getElementById('inventory');
 
+const treasure = document.getElementById('treasure');//treasure image
+
 let currentLocation = 4;
+
 
 let locations = [];
 locations[0] = "kantine";
@@ -52,70 +55,102 @@ descriptions[6] = "u staat bij de toiletten";
 descriptions[7] = "u staat in een klaslokaal. De tafels staan recht achter elkaar en voorin is een projector en een smartboard";
 descriptions[8] = "u staat in het examenlokaal. Hier zijn de vierdejaars studenten bezig met het voorbereiden van hun examen";
 
-myInput.addEventListener('keydown', getInput, false);
+treasures = [];
+treasures[1] = "een supermooie schatkis met juwlene";
+treasures[3] = "key";
 
-function getInput(evt) {
-  if (evt.key == "Enter") {
-    let inputArray = myInput.value.split(" ");
+treasuresImages = [];
+treasuresImages[1] = "treasure.png";
+treasuresImages[3] = "keyvoorbeeld.png";
 
-    if (inputArray[0] == "ga") {
-      if (directions[currentLocation].indexOf(inputArray[1]) != -1) {
-        switch (inputArray[1]) {
-          case "noord":
-            currentLocation -= 3;
-            break;
-          case "zuid":
-            currentLocation += 3;
-            break;
-          case "oost":
-            currentLocation += 1;
-            break;
-          case "west":
-            currentLocation -= 1;
-            break;
+inventory=[];
+
+
+
+//while (gameIsRunning == true){
+
+  myInput.addEventListener('keydown', getInput, false);
+
+  function getInput(evt) {
+    if (evt.key == "Enter") {
+      let inputArray = myInput.value.split(" ");
+
+      if (inputArray[0] == "ga") {
+        if (directions[currentLocation].indexOf(inputArray[1]) != -1) {
+          switch (inputArray[1]) {
+            case "noord":
+              currentLocation -= 3;
+              break;
+            case "zuid":
+              currentLocation += 3;
+              break;
+            case "oost":
+              currentLocation += 1;
+              break;
+            case "west":
+              currentLocation -= 1;
+              break;
+          }
+        } else {
+          feedback.innerHTML = "dat mag niet";
+          setTimeout(removeFeedback, 2000);
+
         }
-      } else {
-        feedback.innerHTML = "dat mag niet";
-        setTimeout(removeFeedback, 2000);
-
+        giveLocation();
+        myInput.value = "";
       }
-      giveLocation();
-      myInput.value = "";
-    }
 
-    if (inputArray[0] == "pak") {
-      console.log('ga wat pakken');
-      myInput.value = "";
-    }
+      if (inputArray[0] == "pak") {
+        console.log('ga wat pakken');
 
-    if (inputArray[0] == "gebruik"){
-      console.log('ga wat gebruiken');
-      myInput.value = "";
-    }
+        myInput.value = "";
+      }
 
-    if (inputArray[0] != "ga" && inputArray[0] != "pak" && inputArray[0] != "gebruik" ){
-      feedback.innerHTML = "mogelijke commando's zijn: ga, pak, gebruik en help";
-      myInput.value = "";
-      setTimeout(removeFeedback, 4000);
-    }
+      if (inputArray[0] == "gebruik"){
+        console.log('ga wat gebruiken');
+        myInput.value = "";
+      }
 
+      if (inputArray[0] != "ga" && inputArray[0] != "pak" && inputArray[0] != "gebruik" ){
+        feedback.innerHTML = "mogelijke commando's zijn: ga, pak, gebruik en help";
+        myInput.value = "";
+        setTimeout(removeFeedback, 4000);
+      }
+
+    }
   }
-}
 
-function giveLocation() {
-  divLocation.innerHTML = locations[currentLocation];
-  myDescription.innerHTML = descriptions[currentLocation];
-  imageLocation.src = "media/" + images[currentLocation];
-  myDirections = "mogelijke richtingen zijn: ";
-  for (let i = 0; i < directions[currentLocation].length; i++) {
-    myDirections += "<li>" + directions[currentLocation][i] + "</li>";
+  function giveLocation() {
+    divLocation.innerHTML = locations[currentLocation] + " dit is grid " + currentLocation;
+    myDescription.innerHTML = descriptions[currentLocation];
+    imageLocation.src = "media/" + images[currentLocation];
+    myDirections = "mogelijke richtingen zijn: ";
+    for (let i = 0; i < directions[currentLocation].length; i++) {
+      myDirections += "<li>" + directions[currentLocation][i] + "</li>";
+    }
+    myDirections += showTreasure(currentLocation);
+    myPossibilities.innerHTML = myDirections;
+    myInventory.innerHTML = "uw inventory is leeg";
+    
   }
-  myPossibilities.innerHTML = myDirections;
-  myInventory.innerHTML = "uw inventory is leeg";
-}
 
-function removeFeedback() {
-  feedback.innerHTML = "";
-}
+  function removeFeedback() {
+    feedback.innerHTML = "";
+  }
 
-giveLocation();
+  function showTreasure(currentLocation){
+	    if(typeof treasures[currentLocation] != "undefined"){
+	      console.log(treasures[currentLocation]);
+	      treasure.src = "treasures/" + treasuresImages[currentLocation];
+	      let textTreasure = "er is een grote schat !!!!"  + treasures[currentLocation];
+	      
+	      return textTreasure;
+	  }
+	    else{
+	    	treasure.src = "";
+	    	return "";
+	    }
+  }
+
+  giveLocation();
+//}
