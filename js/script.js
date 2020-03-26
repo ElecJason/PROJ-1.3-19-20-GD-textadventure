@@ -56,14 +56,14 @@ descriptions[7] = "u staat in een klaslokaal. De tafels staan recht achter elkaa
 descriptions[8] = "u staat in het examenlokaal. Hier zijn de vierdejaars studenten bezig met het voorbereiden van hun examen";
 
 treasures = [];
-treasures[1] = "een supermooie schatkis met juwlene";
+treasures[1] = "juwelen";
 treasures[3] = "key";
 
 treasuresImages = [];
 treasuresImages[1] = "treasure.png";
 treasuresImages[3] = "keyvoorbeeld.png";
 
-inventory=[];
+inventoryTreasures=[];
 
 
 
@@ -102,6 +102,12 @@ inventory=[];
 
       if (inputArray[0] == "pak") {
         console.log('ga wat pakken');
+        
+        if(treasureAanwezig){
+          console.log("schat aanwezig");
+          pakTreasure(currentLocation);
+          giveLocation();
+        }
 
         myInput.value = "";
       }
@@ -130,8 +136,17 @@ inventory=[];
     }
     myDirections += showTreasure(currentLocation);
     myPossibilities.innerHTML = myDirections;
-    myInventory.innerHTML = "uw inventory is leeg";
-    
+
+    if(inventoryTreasures.length > 0){
+      myInventory.innerHTML = "Dit zijn jouw geweldige schatten";
+      inventoryTreasures.forEach(showTreasure);
+      function showInventory(item, index){
+        myInventory.innerHTML += "<li>" + item + "</li>";
+      }
+    }
+    else{
+      myInventory.innerHTML = "uw inventory is leeg";
+    }
   }
 
   function removeFeedback() {
@@ -139,17 +154,24 @@ inventory=[];
   }
 
   function showTreasure(currentLocation){
-	    if(typeof treasures[currentLocation] != "undefined"){
+	    if(typeof treasures[currentLocation] != "undefined" && treasures[currentLocation] != ""){
 	      console.log(treasures[currentLocation]);
 	      treasure.src = "treasures/" + treasuresImages[currentLocation];
 	      let textTreasure = "er is een grote schat !!!!"  + treasures[currentLocation];
-	      
+	      treasureAanwezig = true;
 	      return textTreasure;
 	  }
 	    else{
 	    	treasure.src = "";
+        treasureAanwezig = false;
 	    	return "";
 	    }
+  }
+
+  function pakTreasure(currentLocation){
+    inventoryTreasures.push(treasures[currentLocation]);
+    treasures[currentLocation] = "";
+    giveLocation();
   }
 
   giveLocation();
