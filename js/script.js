@@ -139,7 +139,7 @@ inventoryTreasures=[];
 
     if(inventoryTreasures.length > 0){
       myInventory.innerHTML = "Dit zijn jouw geweldige schatten";
-      inventoryTreasures.forEach(showTreasure);
+      inventoryTreasures.forEach(showInventory);
       function showInventory(item, index){
         myInventory.innerHTML += "<li>" + item + "</li>";
       }
