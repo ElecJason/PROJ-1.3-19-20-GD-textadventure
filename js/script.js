@@ -61,15 +61,11 @@ treasures[3] = "key";
 
 treasuresImages = [];
 treasuresImages[1] = "treasure.png";
-treasuresImages[3] = "keyvoorbeeld.png";
+treasuresImages[3] = "key.png";
 
 inventoryTreasures=[];
 
-
-
-//while (gameIsRunning == true){
-
-  myInput.addEventListener('keydown', getInput, false);
+myInput.addEventListener('keydown', getInput, false);
 
   function getInput(evt) {
     if (evt.key == "Enter") {
@@ -174,5 +170,5 @@ inventoryTreasures=[];
     giveLocation();
   }
 
-  giveLocation();
-//}
+giveLocation();
+
