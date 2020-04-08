@@ -112,11 +112,15 @@ myInput.addEventListener('keydown', getInput, false);
         console.log('ga wat gebruiken');
         myInput.value = "";
       }
-
-      if (inputArray[0] != "ga" && inputArray[0] != "pak" && inputArray[0] != "gebruik" ){
+      if (inputArray[0] != "ga" && inputArray[0] != "pak" && inputArray[0] != "gebruik" && inputArray[0] != "demo" ){
         feedback.innerHTML = "mogelijke commando's zijn: ga, pak, gebruik en help";
         myInput.value = "";
         setTimeout(removeFeedback, 4000);
+      }
+      if (inputArray[0] == "demo"){
+        console.log('laat de demo zien');
+        window.open('http://29623.hosts2.ma-cloud.nl/bewijzenmap/TextAdventure/text/2020-04-08%2012-25-33.mp4', '_blank');
+        myInput.value = "";
       }
 
     }
